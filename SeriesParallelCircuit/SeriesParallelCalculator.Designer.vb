@@ -24,7 +24,7 @@ Partial Class SeriesParallelCalculator
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.CalculatorToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.CalculatorMenuStrip = New System.Windows.Forms.MenuStrip()
+        Me.CalcMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.IToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CalculateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,43 +58,49 @@ Partial Class SeriesParallelCalculator
         Me.CalculateButton = New System.Windows.Forms.Button()
         Me.ClearButton = New System.Windows.Forms.Button()
         Me.ExitButton = New System.Windows.Forms.Button()
-        Me.CalculatorMenuStrip.SuspendLayout()
+        Me.CalcContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CalculateToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CalcMenuStrip.SuspendLayout()
         CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CalcContextMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
-        'CalculatorMenuStrip
+        'CalcMenuStrip
         '
-        Me.CalculatorMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.CalculatorMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IToolStripMenuItem})
-        Me.CalculatorMenuStrip.Location = New System.Drawing.Point(0, 0)
-        Me.CalculatorMenuStrip.Name = "CalculatorMenuStrip"
-        Me.CalculatorMenuStrip.Size = New System.Drawing.Size(1140, 30)
-        Me.CalculatorMenuStrip.TabIndex = 0
-        Me.CalculatorMenuStrip.Text = "MenuStrip1"
+        Me.CalcMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.CalcMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IToolStripMenuItem})
+        Me.CalcMenuStrip.Location = New System.Drawing.Point(0, 0)
+        Me.CalcMenuStrip.Name = "CalcMenuStrip"
+        Me.CalcMenuStrip.Size = New System.Drawing.Size(1140, 28)
+        Me.CalcMenuStrip.TabIndex = 0
+        Me.CalcMenuStrip.Text = "MenuStrip1"
         '
         'IToolStripMenuItem
         '
         Me.IToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CalculateToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.IToolStripMenuItem.Name = "IToolStripMenuItem"
-        Me.IToolStripMenuItem.Size = New System.Drawing.Size(46, 26)
+        Me.IToolStripMenuItem.Size = New System.Drawing.Size(46, 24)
         Me.IToolStripMenuItem.Text = "File"
         '
         'CalculateToolStripMenuItem
         '
         Me.CalculateToolStripMenuItem.Name = "CalculateToolStripMenuItem"
-        Me.CalculateToolStripMenuItem.Size = New System.Drawing.Size(153, 26)
+        Me.CalculateToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.CalculateToolStripMenuItem.Text = "Calculate"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(153, 26)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 26)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(224, 26)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'CircuitPictureBox
@@ -335,12 +341,45 @@ Partial Class SeriesParallelCalculator
         '
         'ExitButton
         '
+        Me.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.ExitButton.Location = New System.Drawing.Point(979, 536)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(143, 70)
         Me.ExitButton.TabIndex = 29
-        Me.ExitButton.Text = "Close"
+        Me.ExitButton.Text = "Exit"
         Me.ExitButton.UseVisualStyleBackColor = True
+        '
+        'CalcContextMenuStrip
+        '
+        Me.CalcContextMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.CalcContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
+        Me.CalcContextMenuStrip.Name = "CalcContextMenuStrip"
+        Me.CalcContextMenuStrip.Size = New System.Drawing.Size(102, 28)
+        '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CalculateToolStripMenuItem1, Me.ClearToolStripMenuItem1, Me.ExitToolStripMenuItem1})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(101, 24)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
+        'CalculateToolStripMenuItem1
+        '
+        Me.CalculateToolStripMenuItem1.Name = "CalculateToolStripMenuItem1"
+        Me.CalculateToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.CalculateToolStripMenuItem1.Text = "Calculate"
+        '
+        'ClearToolStripMenuItem1
+        '
+        Me.ClearToolStripMenuItem1.Name = "ClearToolStripMenuItem1"
+        Me.ClearToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.ClearToolStripMenuItem1.Text = "Clear"
+        '
+        'ExitToolStripMenuItem1
+        '
+        Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
+        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.ExitToolStripMenuItem1.Text = "Exit"
         '
         'SeriesParallelCalculator
         '
@@ -378,21 +417,22 @@ Partial Class SeriesParallelCalculator
         Me.Controls.Add(Me.R1Label)
         Me.Controls.Add(Me.C1Label)
         Me.Controls.Add(Me.CircuitPictureBox)
-        Me.Controls.Add(Me.CalculatorMenuStrip)
-        Me.MainMenuStrip = Me.CalculatorMenuStrip
+        Me.Controls.Add(Me.CalcMenuStrip)
+        Me.MainMenuStrip = Me.CalcMenuStrip
         Me.Name = "SeriesParallelCalculator"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Series-Parallel Circuit Calculator"
-        Me.CalculatorMenuStrip.ResumeLayout(False)
-        Me.CalculatorMenuStrip.PerformLayout()
+        Me.CalcMenuStrip.ResumeLayout(False)
+        Me.CalcMenuStrip.PerformLayout()
         CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CalcContextMenuStrip.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents CalculatorToolTip As ToolTip
-    Friend WithEvents CalculatorMenuStrip As MenuStrip
+    Friend WithEvents CalcMenuStrip As MenuStrip
     Friend WithEvents IToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CalculateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
@@ -426,4 +466,9 @@ Partial Class SeriesParallelCalculator
     Friend WithEvents CalculateButton As Button
     Friend WithEvents ClearButton As Button
     Friend WithEvents ExitButton As Button
+    Friend WithEvents CalcContextMenuStrip As ContextMenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CalculateToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ClearToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem1 As ToolStripMenuItem
 End Class

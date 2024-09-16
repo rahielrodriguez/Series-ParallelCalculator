@@ -30,14 +30,7 @@ Partial Class SeriesParallelCalculator
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CircuitPictureBox = New System.Windows.Forms.PictureBox()
-        Me.C1Label = New System.Windows.Forms.Label()
-        Me.R1Label = New System.Windows.Forms.Label()
-        Me.L1Label = New System.Windows.Forms.Label()
         Me.R2Label = New System.Windows.Forms.Label()
-        Me.C2Label = New System.Windows.Forms.Label()
-        Me.R3Label = New System.Windows.Forms.Label()
-        Me.VgenLabel = New System.Windows.Forms.Label()
-        Me.FrequencyLabel = New System.Windows.Forms.Label()
         Me.ResultsListBox = New System.Windows.Forms.ListBox()
         Me.VgenTextBox = New System.Windows.Forms.TextBox()
         Me.FrequencyTextBox = New System.Windows.Forms.TextBox()
@@ -79,6 +72,10 @@ Partial Class SeriesParallelCalculator
         Me.MHzRadioButton = New System.Windows.Forms.RadioButton()
         Me.kHzRadioButton = New System.Windows.Forms.RadioButton()
         Me.HzRadioButton = New System.Windows.Forms.RadioButton()
+        Me.RSettingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.MOhmsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.kOhmsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.OhmsRadioButton = New System.Windows.Forms.RadioButton()
         Me.CalcMenuStrip.SuspendLayout()
         CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CalcContextMenuStrip.SuspendLayout()
@@ -87,6 +84,7 @@ Partial Class SeriesParallelCalculator
         Me.CSettingsGroupBox.SuspendLayout()
         Me.LSettingsGroupBox.SuspendLayout()
         Me.FrequencySettingsGroupBox.SuspendLayout()
+        Me.RSettingsGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'CalcMenuStrip
@@ -95,7 +93,7 @@ Partial Class SeriesParallelCalculator
         Me.CalcMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IToolStripMenuItem})
         Me.CalcMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.CalcMenuStrip.Name = "CalcMenuStrip"
-        Me.CalcMenuStrip.Size = New System.Drawing.Size(1140, 28)
+        Me.CalcMenuStrip.Size = New System.Drawing.Size(1363, 28)
         Me.CalcMenuStrip.TabIndex = 0
         Me.CalcMenuStrip.Text = "MenuStrip1"
         '
@@ -133,33 +131,6 @@ Partial Class SeriesParallelCalculator
         Me.CircuitPictureBox.TabIndex = 1
         Me.CircuitPictureBox.TabStop = False
         '
-        'C1Label
-        '
-        Me.C1Label.AutoSize = True
-        Me.C1Label.Location = New System.Drawing.Point(207, 188)
-        Me.C1Label.Name = "C1Label"
-        Me.C1Label.Size = New System.Drawing.Size(23, 16)
-        Me.C1Label.TabIndex = 2
-        Me.C1Label.Text = "C1"
-        '
-        'R1Label
-        '
-        Me.R1Label.AutoSize = True
-        Me.R1Label.Location = New System.Drawing.Point(326, 188)
-        Me.R1Label.Name = "R1Label"
-        Me.R1Label.Size = New System.Drawing.Size(24, 16)
-        Me.R1Label.TabIndex = 3
-        Me.R1Label.Text = "R1"
-        '
-        'L1Label
-        '
-        Me.L1Label.AutoSize = True
-        Me.L1Label.Location = New System.Drawing.Point(521, 228)
-        Me.L1Label.Name = "L1Label"
-        Me.L1Label.Size = New System.Drawing.Size(21, 16)
-        Me.L1Label.TabIndex = 4
-        Me.L1Label.Text = "L1"
-        '
         'R2Label
         '
         Me.R2Label.AutoSize = True
@@ -169,49 +140,13 @@ Partial Class SeriesParallelCalculator
         Me.R2Label.TabIndex = 5
         Me.R2Label.Text = "R2"
         '
-        'C2Label
-        '
-        Me.C2Label.AutoSize = True
-        Me.C2Label.Location = New System.Drawing.Point(790, 228)
-        Me.C2Label.Name = "C2Label"
-        Me.C2Label.Size = New System.Drawing.Size(23, 16)
-        Me.C2Label.TabIndex = 6
-        Me.C2Label.Text = "C2"
-        '
-        'R3Label
-        '
-        Me.R3Label.AutoSize = True
-        Me.R3Label.Location = New System.Drawing.Point(772, 323)
-        Me.R3Label.Name = "R3Label"
-        Me.R3Label.Size = New System.Drawing.Size(24, 16)
-        Me.R3Label.TabIndex = 7
-        Me.R3Label.Text = "R3"
-        '
-        'VgenLabel
-        '
-        Me.VgenLabel.AutoSize = True
-        Me.VgenLabel.Location = New System.Drawing.Point(34, 278)
-        Me.VgenLabel.Name = "VgenLabel"
-        Me.VgenLabel.Size = New System.Drawing.Size(39, 16)
-        Me.VgenLabel.TabIndex = 8
-        Me.VgenLabel.Text = "Vgen"
-        '
-        'FrequencyLabel
-        '
-        Me.FrequencyLabel.AutoSize = True
-        Me.FrequencyLabel.Location = New System.Drawing.Point(34, 307)
-        Me.FrequencyLabel.Name = "FrequencyLabel"
-        Me.FrequencyLabel.Size = New System.Drawing.Size(10, 16)
-        Me.FrequencyLabel.TabIndex = 9
-        Me.FrequencyLabel.Text = "f"
-        '
         'ResultsListBox
         '
         Me.ResultsListBox.FormattingEnabled = True
         Me.ResultsListBox.ItemHeight = 16
         Me.ResultsListBox.Location = New System.Drawing.Point(899, 39)
         Me.ResultsListBox.Name = "ResultsListBox"
-        Me.ResultsListBox.Size = New System.Drawing.Size(223, 276)
+        Me.ResultsListBox.Size = New System.Drawing.Size(452, 276)
         Me.ResultsListBox.TabIndex = 10
         '
         'VgenTextBox
@@ -219,14 +154,14 @@ Partial Class SeriesParallelCalculator
         Me.VgenTextBox.Location = New System.Drawing.Point(12, 35)
         Me.VgenTextBox.Name = "VgenTextBox"
         Me.VgenTextBox.Size = New System.Drawing.Size(100, 22)
-        Me.VgenTextBox.TabIndex = 11
+        Me.VgenTextBox.TabIndex = 0
         '
         'FrequencyTextBox
         '
         Me.FrequencyTextBox.Location = New System.Drawing.Point(12, 83)
         Me.FrequencyTextBox.Name = "FrequencyTextBox"
         Me.FrequencyTextBox.Size = New System.Drawing.Size(100, 22)
-        Me.FrequencyTextBox.TabIndex = 12
+        Me.FrequencyTextBox.TabIndex = 1
         '
         'VgenValueLabel
         '
@@ -251,7 +186,7 @@ Partial Class SeriesParallelCalculator
         Me.C1TextBox.Location = New System.Drawing.Point(140, 34)
         Me.C1TextBox.Name = "C1TextBox"
         Me.C1TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.C1TextBox.TabIndex = 15
+        Me.C1TextBox.TabIndex = 2
         '
         'C1ValueLabel
         '
@@ -267,7 +202,7 @@ Partial Class SeriesParallelCalculator
         Me.C2TextBox.Location = New System.Drawing.Point(140, 82)
         Me.C2TextBox.Name = "C2TextBox"
         Me.C2TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.C2TextBox.TabIndex = 17
+        Me.C2TextBox.TabIndex = 3
         '
         'C2ValueLabel
         '
@@ -283,7 +218,7 @@ Partial Class SeriesParallelCalculator
         Me.R1TextBox.Location = New System.Drawing.Point(265, 35)
         Me.R1TextBox.Name = "R1TextBox"
         Me.R1TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.R1TextBox.TabIndex = 19
+        Me.R1TextBox.TabIndex = 4
         '
         'R1ValueLabel
         '
@@ -299,7 +234,7 @@ Partial Class SeriesParallelCalculator
         Me.R2TextBox.Location = New System.Drawing.Point(265, 83)
         Me.R2TextBox.Name = "R2TextBox"
         Me.R2TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.R2TextBox.TabIndex = 21
+        Me.R2TextBox.TabIndex = 5
         '
         'R2ValueLabel
         '
@@ -315,7 +250,7 @@ Partial Class SeriesParallelCalculator
         Me.L1TextBox.Location = New System.Drawing.Point(385, 83)
         Me.L1TextBox.Name = "L1TextBox"
         Me.L1TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.L1TextBox.TabIndex = 23
+        Me.L1TextBox.TabIndex = 7
         '
         'L1ValueLabel
         '
@@ -331,7 +266,7 @@ Partial Class SeriesParallelCalculator
         Me.RwTextBox.Location = New System.Drawing.Point(504, 83)
         Me.RwTextBox.Name = "RwTextBox"
         Me.RwTextBox.Size = New System.Drawing.Size(100, 22)
-        Me.RwTextBox.TabIndex = 25
+        Me.RwTextBox.TabIndex = 8
         '
         'RwValueLabel
         '
@@ -347,7 +282,7 @@ Partial Class SeriesParallelCalculator
         Me.CalculateButton.Location = New System.Drawing.Point(12, 17)
         Me.CalculateButton.Name = "CalculateButton"
         Me.CalculateButton.Size = New System.Drawing.Size(143, 70)
-        Me.CalculateButton.TabIndex = 27
+        Me.CalculateButton.TabIndex = 12
         Me.CalculateButton.Text = "Calculate"
         Me.CalculateButton.UseVisualStyleBackColor = True
         '
@@ -356,7 +291,7 @@ Partial Class SeriesParallelCalculator
         Me.ClearButton.Location = New System.Drawing.Point(12, 93)
         Me.ClearButton.Name = "ClearButton"
         Me.ClearButton.Size = New System.Drawing.Size(143, 70)
-        Me.ClearButton.TabIndex = 28
+        Me.ClearButton.TabIndex = 13
         Me.ClearButton.Text = "&Clear"
         Me.ClearButton.UseVisualStyleBackColor = True
         '
@@ -366,7 +301,7 @@ Partial Class SeriesParallelCalculator
         Me.ExitButton.Location = New System.Drawing.Point(12, 168)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(143, 70)
-        Me.ExitButton.TabIndex = 29
+        Me.ExitButton.TabIndex = 14
         Me.ExitButton.Text = "Exit"
         Me.ExitButton.UseVisualStyleBackColor = True
         '
@@ -407,7 +342,7 @@ Partial Class SeriesParallelCalculator
         Me.R3TextBox.Location = New System.Drawing.Point(385, 35)
         Me.R3TextBox.Name = "R3TextBox"
         Me.R3TextBox.Size = New System.Drawing.Size(100, 22)
-        Me.R3TextBox.TabIndex = 30
+        Me.R3TextBox.TabIndex = 6
         '
         'R3ValueLabel
         '
@@ -450,7 +385,7 @@ Partial Class SeriesParallelCalculator
         Me.ControlsGroupBox.Controls.Add(Me.ExitButton)
         Me.ControlsGroupBox.Controls.Add(Me.ClearButton)
         Me.ControlsGroupBox.Controls.Add(Me.CalculateButton)
-        Me.ControlsGroupBox.Location = New System.Drawing.Point(958, 372)
+        Me.ControlsGroupBox.Location = New System.Drawing.Point(1181, 372)
         Me.ControlsGroupBox.Name = "ControlsGroupBox"
         Me.ControlsGroupBox.Size = New System.Drawing.Size(170, 253)
         Me.ControlsGroupBox.TabIndex = 33
@@ -507,10 +442,10 @@ Partial Class SeriesParallelCalculator
         '
         Me.CSettingsGroupBox.Controls.Add(Me.CpicoRadioButton)
         Me.CSettingsGroupBox.Controls.Add(Me.CmicroRadioButton)
-        Me.CSettingsGroupBox.Location = New System.Drawing.Point(747, 517)
+        Me.CSettingsGroupBox.Location = New System.Drawing.Point(940, 520)
         Me.CSettingsGroupBox.Name = "CSettingsGroupBox"
         Me.CSettingsGroupBox.Size = New System.Drawing.Size(80, 73)
-        Me.CSettingsGroupBox.TabIndex = 38
+        Me.CSettingsGroupBox.TabIndex = 10
         Me.CSettingsGroupBox.TabStop = False
         Me.CSettingsGroupBox.Text = "CSettings"
         '
@@ -519,10 +454,10 @@ Partial Class SeriesParallelCalculator
         Me.LSettingsGroupBox.Controls.Add(Me.LmicroRadioButton)
         Me.LSettingsGroupBox.Controls.Add(Me.LmilliRadioButton)
         Me.LSettingsGroupBox.Controls.Add(Me.LRadioButton)
-        Me.LSettingsGroupBox.Location = New System.Drawing.Point(854, 517)
+        Me.LSettingsGroupBox.Location = New System.Drawing.Point(1047, 520)
         Me.LSettingsGroupBox.Name = "LSettingsGroupBox"
         Me.LSettingsGroupBox.Size = New System.Drawing.Size(83, 105)
-        Me.LSettingsGroupBox.TabIndex = 39
+        Me.LSettingsGroupBox.TabIndex = 11
         Me.LSettingsGroupBox.TabStop = False
         Me.LSettingsGroupBox.Text = "LSettings"
         '
@@ -542,10 +477,10 @@ Partial Class SeriesParallelCalculator
         Me.FrequencySettingsGroupBox.Controls.Add(Me.MHzRadioButton)
         Me.FrequencySettingsGroupBox.Controls.Add(Me.kHzRadioButton)
         Me.FrequencySettingsGroupBox.Controls.Add(Me.HzRadioButton)
-        Me.FrequencySettingsGroupBox.Location = New System.Drawing.Point(646, 517)
+        Me.FrequencySettingsGroupBox.Location = New System.Drawing.Point(839, 520)
         Me.FrequencySettingsGroupBox.Name = "FrequencySettingsGroupBox"
         Me.FrequencySettingsGroupBox.Size = New System.Drawing.Size(83, 105)
-        Me.FrequencySettingsGroupBox.TabIndex = 40
+        Me.FrequencySettingsGroupBox.TabIndex = 9
         Me.FrequencySettingsGroupBox.TabStop = False
         Me.FrequencySettingsGroupBox.Text = "FSettings"
         '
@@ -583,27 +518,67 @@ Partial Class SeriesParallelCalculator
         Me.HzRadioButton.Text = "Hz"
         Me.HzRadioButton.UseVisualStyleBackColor = True
         '
+        'RSettingsGroupBox
+        '
+        Me.RSettingsGroupBox.Controls.Add(Me.MOhmsRadioButton)
+        Me.RSettingsGroupBox.Controls.Add(Me.kOhmsRadioButton)
+        Me.RSettingsGroupBox.Controls.Add(Me.OhmsRadioButton)
+        Me.RSettingsGroupBox.Location = New System.Drawing.Point(735, 520)
+        Me.RSettingsGroupBox.Name = "RSettingsGroupBox"
+        Me.RSettingsGroupBox.Size = New System.Drawing.Size(83, 105)
+        Me.RSettingsGroupBox.TabIndex = 39
+        Me.RSettingsGroupBox.TabStop = False
+        Me.RSettingsGroupBox.Text = "RSettings"
+        '
+        'MOhmsRadioButton
+        '
+        Me.MOhmsRadioButton.AutoSize = True
+        Me.MOhmsRadioButton.Location = New System.Drawing.Point(7, 73)
+        Me.MOhmsRadioButton.Name = "MOhmsRadioButton"
+        Me.MOhmsRadioButton.Size = New System.Drawing.Size(74, 20)
+        Me.MOhmsRadioButton.TabIndex = 38
+        Me.MOhmsRadioButton.TabStop = True
+        Me.MOhmsRadioButton.Text = "MOhms"
+        Me.MOhmsRadioButton.UseVisualStyleBackColor = True
+        '
+        'kOhmsRadioButton
+        '
+        Me.kOhmsRadioButton.AutoSize = True
+        Me.kOhmsRadioButton.Location = New System.Drawing.Point(7, 47)
+        Me.kOhmsRadioButton.Name = "kOhmsRadioButton"
+        Me.kOhmsRadioButton.Size = New System.Drawing.Size(70, 20)
+        Me.kOhmsRadioButton.TabIndex = 37
+        Me.kOhmsRadioButton.TabStop = True
+        Me.kOhmsRadioButton.Text = "kOhms"
+        Me.kOhmsRadioButton.UseVisualStyleBackColor = True
+        '
+        'OhmsRadioButton
+        '
+        Me.OhmsRadioButton.AutoSize = True
+        Me.OhmsRadioButton.Checked = True
+        Me.OhmsRadioButton.Location = New System.Drawing.Point(7, 21)
+        Me.OhmsRadioButton.Name = "OhmsRadioButton"
+        Me.OhmsRadioButton.Size = New System.Drawing.Size(63, 20)
+        Me.OhmsRadioButton.TabIndex = 36
+        Me.OhmsRadioButton.TabStop = True
+        Me.OhmsRadioButton.Text = "Ohms"
+        Me.OhmsRadioButton.UseVisualStyleBackColor = True
+        '
         'SeriesParallelCalculator
         '
         Me.AcceptButton = Me.CalculateButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ExitButton
-        Me.ClientSize = New System.Drawing.Size(1140, 637)
+        Me.ClientSize = New System.Drawing.Size(1363, 637)
+        Me.Controls.Add(Me.RSettingsGroupBox)
         Me.Controls.Add(Me.FrequencySettingsGroupBox)
         Me.Controls.Add(Me.LSettingsGroupBox)
         Me.Controls.Add(Me.CSettingsGroupBox)
         Me.Controls.Add(Me.ControlsGroupBox)
         Me.Controls.Add(Me.ValuesGroupBox)
         Me.Controls.Add(Me.ResultsListBox)
-        Me.Controls.Add(Me.FrequencyLabel)
-        Me.Controls.Add(Me.VgenLabel)
-        Me.Controls.Add(Me.R3Label)
-        Me.Controls.Add(Me.C2Label)
         Me.Controls.Add(Me.R2Label)
-        Me.Controls.Add(Me.L1Label)
-        Me.Controls.Add(Me.R1Label)
-        Me.Controls.Add(Me.C1Label)
         Me.Controls.Add(Me.CircuitPictureBox)
         Me.Controls.Add(Me.CalcMenuStrip)
         Me.MainMenuStrip = Me.CalcMenuStrip
@@ -623,6 +598,8 @@ Partial Class SeriesParallelCalculator
         Me.LSettingsGroupBox.PerformLayout()
         Me.FrequencySettingsGroupBox.ResumeLayout(False)
         Me.FrequencySettingsGroupBox.PerformLayout()
+        Me.RSettingsGroupBox.ResumeLayout(False)
+        Me.RSettingsGroupBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -684,4 +661,8 @@ Partial Class SeriesParallelCalculator
     Friend WithEvents MHzRadioButton As RadioButton
     Friend WithEvents kHzRadioButton As RadioButton
     Friend WithEvents HzRadioButton As RadioButton
+    Friend WithEvents RSettingsGroupBox As GroupBox
+    Friend WithEvents MOhmsRadioButton As RadioButton
+    Friend WithEvents kOhmsRadioButton As RadioButton
+    Friend WithEvents OhmsRadioButton As RadioButton
 End Class

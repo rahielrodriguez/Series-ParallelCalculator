@@ -570,6 +570,25 @@ Public Class SeriesParallelCalculator
 
     End Sub
 
+    'Sub DocumentSaving()
+
+    '    FileOpen(1, "..\..\Series-Parallel Circuit Calculator Results.txt", OpenMode.Append)
+
+    '        Dim saveResults As New System.Text.StringBuilder()
+
+    '    Try
+    '        For Each result As String In ResultsListBox.Items
+    '            saveResults.AppendLine(result)
+    '        Next
+    '    Catch ex As Exception
+
+    '    End Try
+
+
+    '    FileClose()
+
+    'End Sub
+
 
     Private Sub CalculateButton_Click(sender As Object, e As EventArgs) Handles CalculateButton.Click, CalculateToolStripMenuItem.Click, CalculateToolStripMenuItem1.Click
 
@@ -587,6 +606,8 @@ Public Class SeriesParallelCalculator
 
     Private Sub SeriesParallelCalculator_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        FileOpen(1, "..\..\Series-Parallel Circuit Calculator Results.txt", OpenMode.Append)
+        FileClose()
         SetDefaults()
 
     End Sub
@@ -598,6 +619,11 @@ Public Class SeriesParallelCalculator
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click, ExitToolStripMenuItem.Click, ExitToolStripMenuItem1.Click
         Me.Close()
+
+    End Sub
+
+    Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
+        'DocumentSaving()
 
     End Sub
 

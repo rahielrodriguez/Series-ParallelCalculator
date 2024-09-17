@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property Updated_Series_Parallel_Calculator_Circuit_Schematic() As System.Drawing.Bitmap
+        Friend ReadOnly Property Final_Series_Parallel_Calculator_Circuit_Schematic() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Updated_Series_Parallel_Calculator_Circuit_Schematic", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Final_Series_Parallel_Calculator_Circuit_Schematic", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

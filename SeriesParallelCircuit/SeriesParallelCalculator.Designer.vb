@@ -29,7 +29,6 @@ Partial Class SeriesParallelCalculator
         Me.CalculateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CircuitPictureBox = New System.Windows.Forms.PictureBox()
         Me.ResultsListBox = New System.Windows.Forms.ListBox()
         Me.VgenTextBox = New System.Windows.Forms.TextBox()
         Me.FrequencyTextBox = New System.Windows.Forms.TextBox()
@@ -85,8 +84,8 @@ Partial Class SeriesParallelCalculator
         Me.uAmpsRadioButton = New System.Windows.Forms.RadioButton()
         Me.mAmpsRadioButton = New System.Windows.Forms.RadioButton()
         Me.AmpsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.CircuitPictureBox = New System.Windows.Forms.PictureBox()
         Me.CalcMenuStrip.SuspendLayout()
-        CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CalcContextMenuStrip.SuspendLayout()
         Me.ValuesGroupBox.SuspendLayout()
         Me.ControlsGroupBox.SuspendLayout()
@@ -97,6 +96,7 @@ Partial Class SeriesParallelCalculator
         Me.VGenSettingsGroupBox.SuspendLayout()
         Me.RDisplaySettingsGroupBox.SuspendLayout()
         Me.IDisplaySettingsGroupBox.SuspendLayout()
+        CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'CalcMenuStrip
@@ -105,7 +105,7 @@ Partial Class SeriesParallelCalculator
         Me.CalcMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IToolStripMenuItem})
         Me.CalcMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.CalcMenuStrip.Name = "CalcMenuStrip"
-        Me.CalcMenuStrip.Size = New System.Drawing.Size(1496, 28)
+        Me.CalcMenuStrip.Size = New System.Drawing.Size(1496, 30)
         Me.CalcMenuStrip.TabIndex = 0
         Me.CalcMenuStrip.Text = "MenuStrip1"
         '
@@ -113,7 +113,7 @@ Partial Class SeriesParallelCalculator
         '
         Me.IToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CalculateToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.IToolStripMenuItem.Name = "IToolStripMenuItem"
-        Me.IToolStripMenuItem.Size = New System.Drawing.Size(46, 24)
+        Me.IToolStripMenuItem.Size = New System.Drawing.Size(46, 26)
         Me.IToolStripMenuItem.Text = "File"
         '
         'CalculateToolStripMenuItem
@@ -133,15 +133,6 @@ Partial Class SeriesParallelCalculator
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 26)
         Me.ExitToolStripMenuItem.Text = "Exit"
-        '
-        'CircuitPictureBox
-        '
-        Me.CircuitPictureBox.Image = Global.SeriesParallelCircuit.My.Resources.Resources.Updated_Series_Parallel_Calculator_Circuit_Schematic
-        Me.CircuitPictureBox.Location = New System.Drawing.Point(7, 41)
-        Me.CircuitPictureBox.Name = "CircuitPictureBox"
-        Me.CircuitPictureBox.Size = New System.Drawing.Size(906, 450)
-        Me.CircuitPictureBox.TabIndex = 1
-        Me.CircuitPictureBox.TabStop = False
         '
         'ResultsListBox
         '
@@ -692,6 +683,15 @@ Partial Class SeriesParallelCalculator
         Me.AmpsRadioButton.Text = "Amps"
         Me.AmpsRadioButton.UseVisualStyleBackColor = True
         '
+        'CircuitPictureBox
+        '
+        Me.CircuitPictureBox.Image = Global.SeriesParallelCircuit.My.Resources.Resources.Final_Series_Parallel_Calculator_Circuit_Schematic
+        Me.CircuitPictureBox.Location = New System.Drawing.Point(7, 41)
+        Me.CircuitPictureBox.Name = "CircuitPictureBox"
+        Me.CircuitPictureBox.Size = New System.Drawing.Size(906, 450)
+        Me.CircuitPictureBox.TabIndex = 1
+        Me.CircuitPictureBox.TabStop = False
+        '
         'SeriesParallelCalculator
         '
         Me.AcceptButton = Me.CalculateButton
@@ -717,7 +717,6 @@ Partial Class SeriesParallelCalculator
         Me.Text = "Series-Parallel Circuit Calculator"
         Me.CalcMenuStrip.ResumeLayout(False)
         Me.CalcMenuStrip.PerformLayout()
-        CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CalcContextMenuStrip.ResumeLayout(False)
         Me.ValuesGroupBox.ResumeLayout(False)
         Me.ValuesGroupBox.PerformLayout()
@@ -736,6 +735,7 @@ Partial Class SeriesParallelCalculator
         Me.RDisplaySettingsGroupBox.PerformLayout()
         Me.IDisplaySettingsGroupBox.ResumeLayout(False)
         Me.IDisplaySettingsGroupBox.PerformLayout()
+        CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

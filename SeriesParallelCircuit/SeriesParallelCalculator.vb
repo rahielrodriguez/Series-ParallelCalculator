@@ -1,7 +1,11 @@
-﻿Option Strict On
+﻿'Rahiel Rodriguez
+'RCET 3371
+'Fall 2024
+'Series-Parallel Circuit Calculator
+'https://github.com/rahielrodriguez/Series-ParallelCalculator.git
+
+Option Strict On
 Option Explicit On
-
-
 
 'TODO List
 '[x] Set Default Values
@@ -110,6 +114,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Function VgenValidation() As Boolean
 
+        'Only allows a number into the vgen text box and it cannot be equal to 0
         Try
             vgenValue = CDbl(VgenTextBox.Text)
 
@@ -133,6 +138,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function FrequencyValidation() As Boolean
 
+        'Only allows a number into the frequency text box and it can not be 0 or less to not allow negative numbers
         Try
             frequencyValue = CDbl(FrequencyTextBox.Text)
 
@@ -154,6 +160,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function C1Validation() As Boolean
 
+        'Only allows a number into the C1 text box and it can not be 0 or less to not allow negative numbers
         Try
             c1Value = CDbl(C1TextBox.Text)
 
@@ -176,6 +183,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function R1Validation() As Boolean
 
+        'Only allows a number into the R1 text box and it can not be 0 or less to not allow negative numbers
         Try
             r1Value = CDbl(R1TextBox.Text)
 
@@ -198,6 +206,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function L1Validation() As Boolean
 
+        'Only allows a number into the L1 text box and it can not be 0 or less to not allow negative numbers
         Try
             l1Value = CDbl(L1TextBox.Text)
 
@@ -220,6 +229,7 @@ Public Class SeriesParallelCalculator
 
     Function R2Validation() As Boolean
 
+        'Only allows a number into the R2 text box and it can not be 0 or less to not allow negative numbers
         Try
             r2Value = CDbl(R2TextBox.Text)
 
@@ -242,6 +252,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function C2Validation() As Boolean
 
+        'Only allows a number into the C2 text box and it can not be 0 or less to not allow negative numbers
         Try
             c2Value = CDbl(C2TextBox.Text)
 
@@ -264,6 +275,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function R3Validation() As Boolean
 
+        'Only allows a number into the R3 text box and it can not be 0 or less to not allow negative numbers
         Try
             r3Value = CDbl(R3TextBox.Text)
 
@@ -286,6 +298,7 @@ Public Class SeriesParallelCalculator
     End Function
     Function RwValidation() As Boolean
 
+        'Only allows a number into the frequency text box and it cannot be less than 0 to not allow negative numbers
         Try
             rwValue = CDbl(RwTextBox.Text)
 
@@ -300,14 +313,23 @@ Public Class SeriesParallelCalculator
             End Select
 
         Catch ex As Exception
-            rwValue = 0
-            RwTextBox.BackColor = Color.White
-            Return True
+            'In case an Rw value is not written, throws a 0 into the operation
+            If RwTextBox.Text = "" Then
+                rwValue = 0
+                RwTextBox.BackColor = Color.White
+                Return True
+            Else
+                'In case Rw value is a not valid value different to a negative number, it throws an error and does not allow to continue
+                RwTextBox.BackColor = Color.LightYellow
+                message &= "Valid resistance value for Rw is Required" & vbNewLine
+                Return False
+            End If
         End Try
 
     End Function
     Sub RSettings()
 
+        'Sets all magnitudes for resistances according to the users selection
         If OhmsRadioButton.Checked = True Then
             r1CurrentValue = r1Value
             r2CurrentValue = r2Value
@@ -324,6 +346,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Sub cSettings()
 
+        'sets all magnitudes for capacitances according to the user selection
         If CmicroRadioButton.Checked = True Then
             c1CurrentValue = c1Value * 0.000001
             c2CurrentValue = c2Value * 0.000001
@@ -335,6 +358,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Sub LSettings()
 
+        'sets all magnitudes for inductance according to the user selection
         If LRadioButton.Checked = True Then
             l1CurrentValue = l1Value
         ElseIf LmilliRadioButton.Checked = True Then
@@ -345,6 +369,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Sub FrequencySettings()
 
+        'sets all magnitudes for frequency according to the user selection
         If HzRadioButton.Checked = True Then
             frequencyCurrentValue = frequencyValue
         ElseIf kHzRadioButton.Checked = True Then
@@ -355,6 +380,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Function FieldValidation() As Boolean
 
+        'If one field does not have information or is wrong information, it will not allow to proceed
         If VgenValidation() And FrequencyValidation() And C1Validation() And R1Validation() And L1Validation() And RwValidation() And R2Validation() And C2Validation() And R3Validation() = True Then
             Return True
         Else
@@ -368,6 +394,7 @@ Public Class SeriesParallelCalculator
         LSettings()
         FrequencySettings()
 
+        'calculates the reactances for C1, C2 and L1
         xc1Result = -1 * (1 / (2 * Math.PI * frequencyCurrentValue * c1CurrentValue))
 
         xl1Result = 2 * Math.PI * frequencyCurrentValue * l1CurrentValue
@@ -377,10 +404,12 @@ Public Class SeriesParallelCalculator
     End Sub
     Sub ZCalculations()
 
+        'Calculates impedance (Polar) for L1 in case an Rw value is used
         zl1PolResult = Math.Sqrt((rwValue ^ 2) + (xl1Result ^ 2))
 
         zl1AngResult = (((Math.Atan(xl1Result / rwValue)) * 180) / Math.PI)
 
+        'Calculates all impedances in the circuit in polar and rectangular form
         zseriesreal = r1CurrentValue
 
         zseriesimg = xc1Result
@@ -419,6 +448,7 @@ Public Class SeriesParallelCalculator
 
         zparallelimg = zparallelpol * Math.Sin((zparallelangle * Math.PI) / 180)
 
+        'Determines if j values for rectangular form impedances are positive or negative
         If zparallelimg < 0 Then
 
             zparallelj = "-j"
@@ -449,6 +479,7 @@ Public Class SeriesParallelCalculator
     End Sub
     Sub VandICalculations()
 
+        'Calculates all currents and voltages in the circuit
         itotalResult = vgenValue / ztotalpol
 
         vc1Result = itotalResult * Math.Abs(xc1Result)
@@ -478,6 +509,10 @@ Public Class SeriesParallelCalculator
         ZCalculations()
         VandICalculations()
 
+        'Displays all impedances in the circuit in the Listbox
+        'All impedances will have 3 decimal places with rouding
+        'All reactances have extra decimal places to display values in case they are too small
+        'All impedances and reactances will be displayed with the magnitude selected by the user in the R Display Settings Group Box
         If OhmsDisplayRadioButton.Checked = True Then
 
             ResultsListBox.Items.Add($"Xc1 = {Math.Round((Math.Abs(xc1Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of -90 degrees")
@@ -530,6 +565,10 @@ Public Class SeriesParallelCalculator
             ResultsListBox.Items.Add($"Ztotal in rectangular = {Math.Round((ztotalreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(ztotalimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
         End If
 
+        'Displays all currents in the circuit in the Listbox
+        'All currents will have 3 decimal places with rouding
+        'All currents will be displayed with the magnitude selected by the user in the I Display Settings Group Box
+
         If AmpsRadioButton.Checked = True Then
             ResultsListBox.Items.Add($"Itotal = {Math.Round((itotalResult), 3, MidpointRounding.AwayFromZero)} Amps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
             ResultsListBox.Items.Add($"Ibranch1 = {Math.Round((ib1Result), 3, MidpointRounding.AwayFromZero)} Amps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
@@ -545,6 +584,10 @@ Public Class SeriesParallelCalculator
             ResultsListBox.Items.Add($"Ibranch1 = {Math.Round((ib1Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
             ResultsListBox.Items.Add($"Ibranch2 = {Math.Round((ib2Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
         End If
+
+        'Displays all voltages in the circuit in the Listbox
+        'All voltages will have 3 decimal places with rouding
+        'All voltages will be displayed with the magnitude selected by the user in the V Display Settings Group Box
 
         If VRadioButton.Checked = True Then
             ResultsListBox.Items.Add($"Vc1 = {Math.Round((vc1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (c1valueangle)), 3, MidpointRounding.AwayFromZero)}")

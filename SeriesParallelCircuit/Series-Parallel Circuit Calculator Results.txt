@@ -1,0 +1,26 @@
+Xc1 = 0.003386 kOhms with an angle of -90 degrees
+Xl1 = 0.113097 kOhms with an angle of +90 degrees
+Zl1 = 0.113732 kOhms with an angle of 83.943 degrees
+Xc2 = 0.003386 kOhms with an angle of -90 degrees
+Zbranch1 in polar = 2.015 kOhms with an angle of 3.217 degrees
+Zbranch1 in rectangular = 2.012 kOhms +j 0.113 kOhms
+Zbranch2 in polar = 3 kOhms with an angle of -0.065 degrees
+Zbranch2 in rectangular = 3 kOhms +j 0.003 kOhms
+Zseries in polar = 1 kOhms with an angle of -0.194 degrees
+Zseries in rectangular = 1 kOhms +j 0.003 kOhms
+Zparallel in polar = 1.206 kOhms with an angle of 1.899 degrees
+Zparallel in rectangular = 1.205 kOhms +j 0.04 kOhms
+Ztotal in polar = 2.206 kOhms with an angle of 0.95 degrees
+Ztotal in rectangular = 2.205 kOhms +j 0.037 kOhms
+Itotal = 0.453 mAmps With an angle Of -0.95
+Ibranch1 = 0.271 mAmps with an angle of -2.269
+Ibranch2 = 0.182 mAmps With an angle Of 1.013
+Vc1 = 1.535 mVolts peak with an angle of -90.95
+Vr1 = 453.399 mVolts peak with an angle of -0.95
+Vseries = 453.401 mVolts peak with an angle of -1.144
+Vparallel = 546.764 mVolts peak with an angle of 0.949
+Vz1 = 30.858 mVolts peak with an angle of 87.731
+Vr2 = 542.646 mVolts peak with an angle of -2.269
+Vc2 = 0.617 mVolts peak with an angle of -88.987
+Vr3 = 546.764 mVolts peak with an angle of 1.013
+----------------------------------------------------

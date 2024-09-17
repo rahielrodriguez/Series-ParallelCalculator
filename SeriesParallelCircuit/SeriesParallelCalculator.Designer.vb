@@ -539,10 +539,11 @@ Partial Class SeriesParallelCalculator
         '
         'CircuitPictureBox
         '
-        Me.CircuitPictureBox.Image = Global.SeriesParallelCircuit.My.Resources.Resources.Final_Series_Parallel_Calculator_Circuit_Schematic
+        Me.CircuitPictureBox.BackgroundImage = Global.SeriesParallelCircuit.My.Resources.Resources.Final_Series_Parallel_Calculator_Circuit_Schematic
+        Me.CircuitPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.CircuitPictureBox.Location = New System.Drawing.Point(7, 41)
         Me.CircuitPictureBox.Name = "CircuitPictureBox"
-        Me.CircuitPictureBox.Size = New System.Drawing.Size(906, 450)
+        Me.CircuitPictureBox.Size = New System.Drawing.Size(879, 438)
         Me.CircuitPictureBox.TabIndex = 1
         Me.CircuitPictureBox.TabStop = False
         Me.CalculatorToolTip.SetToolTip(Me.CircuitPictureBox, "Displays an Schematic fur user guide of the type of circuit used in the program")
@@ -680,40 +681,40 @@ Partial Class SeriesParallelCalculator
         Me.CalcContextMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.CalcContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.CalcContextMenuStrip.Name = "CalcContextMenuStrip"
-        Me.CalcContextMenuStrip.Size = New System.Drawing.Size(211, 56)
+        Me.CalcContextMenuStrip.Size = New System.Drawing.Size(102, 28)
         '
         'FileToolStripMenuItem
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CalculateToolStripMenuItem1, Me.ClearToolStripMenuItem1, Me.ExitToolStripMenuItem1, Me.SaveResultsToolStripMenuItem1})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(210, 24)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(101, 24)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'CalculateToolStripMenuItem1
         '
         Me.CalculateToolStripMenuItem1.Name = "CalculateToolStripMenuItem1"
-        Me.CalculateToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.CalculateToolStripMenuItem1.Size = New System.Drawing.Size(173, 26)
         Me.CalculateToolStripMenuItem1.Text = "Calculate"
         Me.CalculateToolStripMenuItem1.ToolTipText = "Calculates all values developed in the circuit "
         '
         'ClearToolStripMenuItem1
         '
         Me.ClearToolStripMenuItem1.Name = "ClearToolStripMenuItem1"
-        Me.ClearToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.ClearToolStripMenuItem1.Size = New System.Drawing.Size(173, 26)
         Me.ClearToolStripMenuItem1.Text = "Clear"
         Me.ClearToolStripMenuItem1.ToolTipText = "Clears all value textboxes and the result list box."
         '
         'ExitToolStripMenuItem1
         '
         Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
-        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(173, 26)
         Me.ExitToolStripMenuItem1.Text = "Exit"
         Me.ExitToolStripMenuItem1.ToolTipText = "Exits and closes the program."
         '
         'SaveResultsToolStripMenuItem1
         '
         Me.SaveResultsToolStripMenuItem1.Name = "SaveResultsToolStripMenuItem1"
-        Me.SaveResultsToolStripMenuItem1.Size = New System.Drawing.Size(224, 26)
+        Me.SaveResultsToolStripMenuItem1.Size = New System.Drawing.Size(173, 26)
         Me.SaveResultsToolStripMenuItem1.Text = "Save Results"
         Me.SaveResultsToolStripMenuItem1.ToolTipText = "Saves all values stored into the results list box into a text file."
         '

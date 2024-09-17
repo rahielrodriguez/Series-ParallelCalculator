@@ -613,24 +613,111 @@ Public Class SeriesParallelCalculator
 
     End Sub
 
-    'Sub DocumentSaving()
+    Sub DocumentSaving()
 
-    '    FileOpen(1, "..\..\Series-Parallel Circuit Calculator Results.txt", OpenMode.Append)
+        FileOpen(1, "..\..\Series-Parallel Circuit Calculator Results.txt", OpenMode.Append)
 
-    '        Dim saveResults As New System.Text.StringBuilder()
+        If OhmsDisplayRadioButton.Checked = True Then
 
-    '    Try
-    '        For Each result As String In ResultsListBox.Items
-    '            saveResults.AppendLine(result)
-    '        Next
-    '    Catch ex As Exception
+            PrintLine(1, CInt($"Xc1 = {Math.Round((Math.Abs(xc1Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Xl1 = {Math.Round((Math.Abs(xl1Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of +90 degrees"))
+            PrintLine(1, CInt($"Zl1 = {Math.Round((Math.Abs(zl1PolResult)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Xc2 = {Math.Round((Math.Abs(xc2Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Zbranch1 in polar = {Math.Round((zb1pol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch1 in rectangular = {Math.Round((zb1real), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zb1img), 3, MidpointRounding.AwayFromZero)} ohms"))
+            PrintLine(1, CInt($"Zbranch2 in polar = {Math.Round((zb2pol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch2 in rectangular = {Math.Round((zb2real), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zb2img), 3, MidpointRounding.AwayFromZero)} ohms"))
+            PrintLine(1, CInt($"Zseries in polar = {Math.Round((zseriespol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zseries in rectangular = {Math.Round((zseriesreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zseriesimg), 3, MidpointRounding.AwayFromZero)} ohms"))
+            PrintLine(1, CInt($"Zparallel in polar = {Math.Round((zparallelpol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zparallel in rectangular = {Math.Round((zparallelreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zparallelimg), 3, MidpointRounding.AwayFromZero)} ohms"))
+            PrintLine(1, CInt($"Ztotal in polar = {Math.Round((ztotalpol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Ztotal in rectangular = {Math.Round((ztotalreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(ztotalimg), 3, MidpointRounding.AwayFromZero)} ohms"))
 
-    '    End Try
+        ElseIf kOhmsDisplayRadioButton.Checked = True Then
 
+            PrintLine(1, CInt($"Xc1 = {Math.Round((Math.Abs(xc1Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Xl1 = {Math.Round((Math.Abs(xl1Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of +90 degrees"))
+            PrintLine(1, CInt($"Zl1 = {Math.Round((Math.Abs(zl1PolResult / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Xc2 = {Math.Round((Math.Abs(xc2Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Zbranch1 in polar = {Math.Round((zb1pol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch1 in rectangular = {Math.Round((zb1real / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zb1img / 1000), 3, MidpointRounding.AwayFromZero)} kOhms"))
+            PrintLine(1, CInt($"Zbranch2 in polar = {Math.Round((zb2pol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch2 in rectangular = {Math.Round((zb2real / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zb2img / 1000), 3, MidpointRounding.AwayFromZero)} kOhms"))
+            PrintLine(1, CInt($"Zseries in polar = {Math.Round((zseriespol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zseries in rectangular = {Math.Round((zseriesreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zseriesimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms"))
+            PrintLine(1, CInt($"Zparallel in polar = {Math.Round((zparallelpol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zparallel in rectangular = {Math.Round((zparallelreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zparallelimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms"))
+            PrintLine(1, CInt($"Ztotal in polar = {Math.Round((ztotalpol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Ztotal in rectangular = {Math.Round((ztotalreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(ztotalimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms"))
 
-    '    FileClose()
+        ElseIf MOhmsDisplayRadioButton.Checked = True Then
 
-    'End Sub
+            PrintLine(1, CInt($"Xc1 = {Math.Round((Math.Abs(xc1Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Xl1 = {Math.Round((Math.Abs(xl1Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of +90 degrees"))
+            PrintLine(1, CInt($"Zl1 = {Math.Round((Math.Abs(zl1PolResult / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Xc2 = {Math.Round((Math.Abs(xc2Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of -90 degrees"))
+            PrintLine(1, CInt($"Zbranch1 in polar = {Math.Round((zb1pol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch1 in rectangular = {Math.Round((zb1real / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zb1img / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms"))
+            PrintLine(1, CInt($"Zbranch2 in polar = {Math.Round((zb2pol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zbranch2 in rectangular = {Math.Round((zb2real / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zb2img / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms"))
+            PrintLine(1, CInt($"Zseries in polar = {Math.Round((zseriespol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zseries in rectangular = {Math.Round((zseriesreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zseriesimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms"))
+            PrintLine(1, CInt($"Zparallel in polar = {Math.Round((zparallelpol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Zparallel in rectangular = {Math.Round((zparallelreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zparallelimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms"))
+            PrintLine(1, CInt($"Ztotal in polar = {Math.Round((ztotalpol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees"))
+            PrintLine(1, CInt($"Ztotal in rectangular = {Math.Round((ztotalreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(ztotalimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms"))
+        End If
+
+        'Displays all currents in the circuit in the Listbox
+        'All currents will have 3 decimal places with rouding
+        'All currents will be displayed with the magnitude selected by the user in the I Display Settings Group Box
+
+        If AmpsRadioButton.Checked = True Then
+            PrintLine(1, CInt($"Itotal = {Math.Round((itotalResult), 3, MidpointRounding.AwayFromZero)} Amps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch1 = {Math.Round((ib1Result), 3, MidpointRounding.AwayFromZero)} Amps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch2 = {Math.Round((ib2Result), 3, MidpointRounding.AwayFromZero)} Amps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}"))
+
+        ElseIf mAmpsRadioButton.Checked = True Then
+            PrintLine(1, CInt($"Itotal = {Math.Round((itotalResult / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch1 = {Math.Round((ib1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch2 = {Math.Round((ib2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}"))
+
+        ElseIf uAmpsRadioButton.Checked = True Then
+            PrintLine(1, CInt($"Itotal = {Math.Round((itotalResult / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch1 = {Math.Round((ib1Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Ibranch2 = {Math.Round((ib2Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}"))
+        End If
+
+        'Displays all voltages in the circuit in the Listbox
+        'All voltages will have 3 decimal places with rouding
+        'All voltages will be displayed with the magnitude selected by the user in the V Display Settings Group Box
+
+        If VRadioButton.Checked = True Then
+            PrintLine(1, CInt($"Vc1 = {Math.Round((vc1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (c1valueangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr1 = {Math.Round((vr1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vseries = {Math.Round((vSeries), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zseriesangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vparallel = {Math.Round((vparallel), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zparallelangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vz1 = {Math.Round((vz1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle) + l1valueangle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr2 = {Math.Round((vr2Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vc2 = {Math.Round((vc2Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + zparallelangle - zb2angle) + c1valueangle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr3 = {Math.Round((vr3Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}"))
+
+        ElseIf mVRadioButton.Checked = True Then
+            PrintLine(1, CInt($"Vc1 = {Math.Round((vc1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (c1valueangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr1 = {Math.Round((vr1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vseries = {Math.Round((vSeries / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zseriesangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vparallel = {Math.Round((vparallel / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zparallelangle)), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vz1 = {Math.Round((vz1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle) + l1valueangle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr2 = {Math.Round((vr2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vc2 = {Math.Round((vc2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + zparallelangle - zb2angle) + c1valueangle), 3, MidpointRounding.AwayFromZero)}"))
+            PrintLine(1, CInt($"Vr3 = {Math.Round((vr3Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}"))
+
+        End If
+
+        FileClose()
+
+    End Sub
 
 
     Private Sub CalculateButton_Click(sender As Object, e As EventArgs) Handles CalculateButton.Click, CalculateToolStripMenuItem.Click, CalculateToolStripMenuItem1.Click
@@ -666,7 +753,7 @@ Public Class SeriesParallelCalculator
     End Sub
 
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
-        'DocumentSaving()
+        DocumentSaving()
 
     End Sub
 

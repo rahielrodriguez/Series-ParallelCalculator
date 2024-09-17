@@ -16,41 +16,53 @@ Option Explicit On
 '[x] Calculate for voltage for each branch and individual components
 '[x] Calculate the reactance for each reactive component
 '[x] Calculate the impedance for each branch and in total
-'[ ] Display all calculated values in a list box
-'[ ] Display correct j signs for real values
-'[ ] Display impedance values with the correct resistance setting
+'[x] Display all calculated values in a list box
+'[x] Display correct j signs for real values
+'[x] Display impedance values with the correct resistance setting
 
 Public Class SeriesParallelCalculator
 
     Dim vgenValue As Double
     Dim frequencyValue As Double
+    Dim frequencyCurrentValue As Double
     Dim c1Value As Double
+    Dim c1CurrentValue As Double
     Dim c2Value As Double
+    Dim c2CurrentValue As Double
     Dim r1Value As Double
+    Dim r1CurrentValue As Double
     Dim r2Value As Double
+    Dim r2CurrentValue As Double
     Dim r3Value As Double
+    Dim r3CurrentValue As Double
     Dim l1Value As Double
+    Dim l1CurrentValue As Double
     Dim rwValue As Double
     Dim ztotalreal As Double
     Dim ztotalimg As Double
     Dim ztotalpol As Double
     Dim ztotalangle As Double
+    Dim ztotalj As String
     Dim zseriesreal As Double
     Dim zseriesimg As Double
     Dim zseriespol As Double
     Dim zseriesangle As Double
+    Dim zseriesj As String
     Dim zparallelreal As Double
     Dim zparallelimg As Double
     Dim zparallelpol As Double
     Dim zparallelangle As Double
+    Dim zparallelj As String
     Dim zb1real As Double
     Dim zb1img As Double
     Dim zb1pol As Double
     Dim zb1angle As Double
+    Dim zb1j As String
     Dim zb2real As Double
     Dim zb2img As Double
     Dim zb2pol As Double
     Dim zb2angle As Double
+    Dim zb2j As String
     Dim c1valueangle As Double = -90
     Dim r1valueangle As Double = 0
     Dim l1valueangle As Double = 90
@@ -61,6 +73,8 @@ Public Class SeriesParallelCalculator
     Dim xc1Result As Double
     Dim xc2Result As Double
     Dim xl1Result As Double
+    Dim zl1PolResult As Double
+    Dim zl1AngResult As Double
     Dim itotalResult As Double
     Dim ib1Result As Double
     Dim ib2Result As Double
@@ -71,9 +85,10 @@ Public Class SeriesParallelCalculator
     Dim ic2Result As Double
     Dim ir3Result As Double
     Dim vparallel As Double
+    Dim vSeries As Double
     Dim vc1Result As Double
     Dim vr1Result As Double
-    Dim vl1Result As Double
+    Dim vz1Result As Double
     Dim vr2Result As Double
     Dim vc2Result As Double
     Dim vr3Result As Double
@@ -294,48 +309,48 @@ Public Class SeriesParallelCalculator
     Sub RSettings()
 
         If OhmsRadioButton.Checked = True Then
-            r1Value = CDbl(frequencyValue)
-            r2Value = CDbl(frequencyValue)
-            r3Value = CDbl(frequencyValue)
+            r1CurrentValue = r1Value
+            r2CurrentValue = r2Value
+            r3CurrentValue = r3Value
         ElseIf kOhmsRadioButton.Checked = True Then
-            r1Value = CDbl(frequencyValue) * 1 ^ 3
-            r2Value = CDbl(frequencyValue) * 1 ^ 3
-            r3Value = CDbl(frequencyValue) * 1 ^ 3
+            r1CurrentValue = r1Value * 1000
+            r2CurrentValue = r2Value * 1000
+            r3CurrentValue = r3Value * 1000
         ElseIf MOhmsRadioButton.Checked = True Then
-            r1Value = CDbl(frequencyValue) * 1 ^ 6
-            r2Value = CDbl(frequencyValue) * 1 ^ 6
-            r3Value = CDbl(frequencyValue) * 1 ^ 6
+            r1CurrentValue = r1Value * 1000000
+            r2CurrentValue = r2Value * 1000000
+            r3CurrentValue = r3Value * 1000000
         End If
-    End Sub
     End Sub
     Sub cSettings()
 
         If CmicroRadioButton.Checked = True Then
-            c1Value = CDbl(C1TextBox.Text) * 1 ^ -6
-            c2Value = CDbl(C2TextBox.Text) * 1 ^ -6
+            c1CurrentValue = c1Value * 0.000001
+            c2CurrentValue = c2Value * 0.000001
         ElseIf CpicoRadioButton.Checked = True Then
-            c1Value = CDbl(C1TextBox.Text) * 1 ^ -12
-            c2Value = CDbl(C2TextBox.Text) * 1 ^ -12
+            c1CurrentValue = c1Value * 0.000000000001
+            c2CurrentValue = c2Value * 0.000000000001
         End If
 
     End Sub
     Sub LSettings()
 
         If LRadioButton.Checked = True Then
-            l1Value = CDbl(L1TextBox.Text)
+            l1CurrentValue = l1Value
         ElseIf LmilliRadioButton.Checked = True Then
-            l1Value = CDbl(L1TextBox.Text) * 1 ^ -3
+            l1CurrentValue = l1Value * 0.001
         ElseIf LmicroRadioButton.Checked = True Then
-            l1Value = CDbl(L1TextBox.Text) * 1 ^ -6
+            l1CurrentValue = l1Value * 0.000001
         End If
     End Sub
     Sub FrequencySettings()
+
         If HzRadioButton.Checked = True Then
-            frequencyValue = CDbl(frequencyValue)
+            frequencyCurrentValue = frequencyValue
         ElseIf kHzRadioButton.Checked = True Then
-            frequencyValue = CDbl(frequencyValue) * 1 ^ 3
+            frequencyCurrentValue = frequencyValue * 1000
         ElseIf MHzRadioButton.Checked = True Then
-            frequencyValue = CDbl(frequencyValue) * 1 ^ 6
+            frequencyCurrentValue = frequencyValue * 1000000
         End If
     End Sub
     Function FieldValidation() As Boolean
@@ -348,58 +363,113 @@ Public Class SeriesParallelCalculator
     End Function
     Sub ReactanceCalculation()
 
-        xc1Result = 1 / (2 * Math.PI * frequencyValue * c1Value)
+        RSettings()
+        cSettings()
+        LSettings()
+        FrequencySettings()
 
-        xl1Result = 2 * Math.PI * frequencyValue * l1Value
+        xc1Result = -1 * (1 / (2 * Math.PI * frequencyCurrentValue * c1CurrentValue))
 
-        xc2Result = 1 / (2 * Math.PI * frequencyValue * c2Value)
+        xl1Result = 2 * Math.PI * frequencyCurrentValue * l1CurrentValue
+
+        xc2Result = -1 * (1 / (2 * Math.PI * frequencyCurrentValue * c2CurrentValue))
 
     End Sub
     Sub ZCalculations()
 
-        zseriesreal = r1Value
+        zl1PolResult = Math.Sqrt((rwValue ^ 2) + (xl1Result ^ 2))
+
+        zl1AngResult = (((Math.Atan(xl1Result / rwValue)) * 180) / Math.PI)
+
+        zseriesreal = r1CurrentValue
+
         zseriesimg = xc1Result
-        zseriespol = Math.Round(Math.Sqrt((zseriesreal ^ 2) + (zseriesimg ^ 2)), 2, MidpointRounding.AwayFromZero)
-        zseriesangle = Math.Round(Math.Atan(zseriesimg / zseriesreal), 2, MidpointRounding.AwayFromZero)
-        zb1real = r2Value + rwValue
+
+        zseriesj = "-j"
+
+        zseriespol = Math.Sqrt((zseriesreal ^ 2) + (zseriesimg ^ 2))
+
+        zseriesangle = (((Math.Atan(zseriesimg / zseriesreal)) * 180) / Math.PI)
+
+        zb1real = r2CurrentValue + rwValue
+
         zb1img = xl1Result
-        zb1pol = Math.Round(Math.Sqrt(((zb1real) ^ 2) + (zb1img ^ 2)), 2, MidpointRounding.AwayFromZero)
-        zb1angle = Math.Round(Math.Atan(zb1img / zb1real), 2, MidpointRounding.AwayFromZero)
-        zb2real = r3Value
+
+        zb1j = "+j"
+
+        zb1pol = Math.Sqrt(((zb1real) ^ 2) + (zb1img ^ 2))
+
+        zb1angle = (((Math.Atan(zb1img / zb1real)) * 180) / Math.PI)
+
+        zb2real = r3CurrentValue
+
         zb2img = xc2Result
-        zb2pol = Math.Round(Math.Sqrt(((zb2real) ^ 2) + (zb2img ^ 2)), 2, MidpointRounding.AwayFromZero)
-        zb2angle = Math.Round(Math.Atan(zb2img / zb2real), 2, MidpointRounding.AwayFromZero)
-        zparallelpol = Math.Round((zb1pol * zb2pol) / (Math.Atan(zb1img / (Math.Sqrt(((zb1real + zb2real) ^ 2) + (zb1img + zb2img) ^ 2)))), 2, MidpointRounding.AwayFromZero)
-        zparallelangle = Math.Round(zb1angle + zb2angle - (Math.Atan((zb1img + zb2img) / (zb1real + zb2real))), 2, MidpointRounding.AwayFromZero)
-        zparallelreal = Math.Round(zparallelpol * (Math.Cos(zparallelangle)), 2, MidpointRounding.AwayFromZero)
-        zparallelimg = Math.Round(zparallelpol * (Math.Sin(zparallelangle)), 2, MidpointRounding.AwayFromZero)
-        ztotalreal = Math.Round((zseriesreal + zparallelreal), 2, MidpointRounding.AwayFromZero)
-        ztotalimg = Math.Round((zseriesimg + zparallelimg), 2, MidpointRounding.AwayFromZero)
-        ztotalpol = Math.Round(Math.Sqrt(((ztotalreal) ^ 2) + (ztotalimg ^ 2)), 2, MidpointRounding.AwayFromZero)
-        ztotalangle = Math.Round(Math.Atan(ztotalimg / ztotalreal), 2, MidpointRounding.AwayFromZero)
+
+        zb2j = "-j"
+
+        zb2pol = Math.Sqrt(((zb2real) ^ 2) + (zb2img ^ 2))
+
+        zb2angle = (((Math.Atan(zb2img / zb2real)) * 180) / Math.PI)
+
+        zparallelpol = (zb1pol * zb2pol) / (Math.Sqrt(((zb1real + zb2real) ^ 2) + ((zb1img + zb2img) ^ 2)))
+
+        zparallelangle = zb1angle + zb2angle - (((Math.Atan((zb1img + zb2img) / (zb1real + zb2real))) * 180) / Math.PI)
+
+        zparallelreal = zparallelpol * Math.Cos((zparallelangle * Math.PI) / 180)
+
+        zparallelimg = zparallelpol * Math.Sin((zparallelangle * Math.PI) / 180)
+
+        If zparallelimg < 0 Then
+
+            zparallelj = "-j"
+
+        ElseIf zparallelimg > 0 Then
+            zparallelj = "+j"
+
+        End If
+
+        ztotalreal = zseriesreal + zparallelreal
+
+        ztotalimg = zseriesimg + zparallelimg
+
+        If ztotalimg < 0 Then
+
+            ztotalj = "-j"
+
+        ElseIf ztotalimg > 0 Then
+
+            ztotalj = "+j"
+
+        End If
+
+        ztotalpol = Math.Sqrt(((ztotalreal) ^ 2) + (ztotalimg ^ 2))
+
+        ztotalangle = (((Math.Atan(ztotalimg / ztotalreal)) * 180) / Math.PI)
 
     End Sub
     Sub VandICalculations()
 
-        vc1Result = Math.Round((vgenValue / xc1Result), 2, MidpointRounding.AwayFromZero)
+        itotalResult = vgenValue / ztotalpol
 
-        vr1Result = Math.Round((vgenValue / r1Value), 2, MidpointRounding.AwayFromZero)
+        vc1Result = itotalResult * Math.Abs(xc1Result)
 
-        itotalResult = Math.Round((vgenValue / ztotalpol), 2, MidpointRounding.AwayFromZero)
+        vr1Result = itotalResult * r1CurrentValue
 
-        vparallel = Math.Round((itotalResult * zb1pol), 2, MidpointRounding.AwayFromZero)
+        vSeries = itotalResult * zseriespol
 
-        ib1Result = Math.Round((vparallel / zb1pol), 2, MidpointRounding.AwayFromZero)
+        vparallel = itotalResult * zparallelpol
 
-        vl1Result = Math.Round((ib1Result * xl1Result), 2, MidpointRounding.AwayFromZero)
+        ib1Result = vparallel / zb1pol
 
-        vr2Result = Math.Round((ib1Result * r2Value), 2, MidpointRounding.AwayFromZero)
+        vz1Result = ib1Result * zl1PolResult
 
-        ib2Result = Math.Round((vparallel / zb2pol), 2, MidpointRounding.AwayFromZero)
+        vr2Result = ib1Result * r2CurrentValue
 
-        vc2Result = Math.Round((ib2Result * xc2Result), 2, MidpointRounding.AwayFromZero)
+        ib2Result = vparallel / zb2pol
 
-        vr3Result = Math.Round((ib2Result * r3Value), 2, MidpointRounding.AwayFromZero)
+        vc2Result = ib2Result * Math.Abs(xc2Result)
+
+        vr3Result = ib2Result * r3CurrentValue
 
     End Sub
     Sub DisplayResults()
@@ -407,22 +477,106 @@ Public Class SeriesParallelCalculator
         ReactanceCalculation()
         ZCalculations()
         VandICalculations()
-        ResultsListBox.Items.Add($"Ztotal in polar = {ztotalpol} ohms with  an angle of {ztotalangle} degrees")
-        ResultsListBox.Items.Add($"Ztotal in rectangular = {ztotalreal} +j {ztotalimg}")
-        ResultsListBox.Items.Add($"Zseries in polar = {zseriespol} with an angle of {zseriesangle} degrees")
-        ResultsListBox.Items.Add($"Zseries in rectangular = {zseriesreal} +j {zseriesimg}")
-        ResultsListBox.Items.Add($"Zparallel in polar = {zparallelpol} with an angle of {zparallelangle} degrees")
-        ResultsListBox.Items.Add($"Zparallel in rectangular = {zparallelreal} +j {zparallelimg}")
-        ResultsListBox.Items.Add($"Zbranch1 in polar = {zb1pol} with an angle of {zb1angle} degrees")
-        ResultsListBox.Items.Add($"Zbranch1 in rectangular = {zb1real} +j {zb1img}")
-        ResultsListBox.Items.Add($"Zbranch2 in polar = {zb2pol} with an angle of {zb2angle}")
-        ResultsListBox.Items.Add($"Zbranch2 in rectangular = {zb2real} +j {zb2img}")
+
+        If OhmsDisplayRadioButton.Checked = True Then
+
+            ResultsListBox.Items.Add($"Xc1 = {Math.Round((Math.Abs(xc1Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Xl1 = {Math.Round((Math.Abs(xl1Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of +90 degrees")
+            ResultsListBox.Items.Add($"Zl1 = {Math.Round((Math.Abs(zl1PolResult)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Xc2 = {Math.Round((Math.Abs(xc2Result)), 3, MidpointRounding.AwayFromZero)} ohms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in polar = {Math.Round((zb1pol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in rectangular = {Math.Round((zb1real), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zb1img), 3, MidpointRounding.AwayFromZero)} ohms")
+            ResultsListBox.Items.Add($"Zbranch2 in polar = {Math.Round((zb2pol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch2 in rectangular = {Math.Round((zb2real), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zb2img), 3, MidpointRounding.AwayFromZero)} ohms")
+            ResultsListBox.Items.Add($"Zseries in polar = {Math.Round((zseriespol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zseries in rectangular = {Math.Round((zseriesreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zseriesimg), 3, MidpointRounding.AwayFromZero)} ohms")
+            ResultsListBox.Items.Add($"Zparallel in polar = {Math.Round((zparallelpol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zparallel in rectangular = {Math.Round((zparallelreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(zparallelimg), 3, MidpointRounding.AwayFromZero)} ohms")
+            ResultsListBox.Items.Add($"Ztotal in polar = {Math.Round((ztotalpol), 3, MidpointRounding.AwayFromZero)} ohms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Ztotal in rectangular = {Math.Round((ztotalreal), 3, MidpointRounding.AwayFromZero)} ohms {zb1j} {Math.Round(Math.Abs(ztotalimg), 3, MidpointRounding.AwayFromZero)} ohms")
+
+        ElseIf kOhmsDisplayRadioButton.Checked = True Then
+
+            ResultsListBox.Items.Add($"Xc1 = {Math.Round((Math.Abs(xc1Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Xl1 = {Math.Round((Math.Abs(xl1Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of +90 degrees")
+            ResultsListBox.Items.Add($"Zl1 = {Math.Round((Math.Abs(zl1PolResult / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Xc2 = {Math.Round((Math.Abs(xc2Result / 1000)), 6, MidpointRounding.AwayFromZero)} kOhms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in polar = {Math.Round((zb1pol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in rectangular = {Math.Round((zb1real / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zb1img / 1000), 3, MidpointRounding.AwayFromZero)} kOhms")
+            ResultsListBox.Items.Add($"Zbranch2 in polar = {Math.Round((zb2pol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch2 in rectangular = {Math.Round((zb2real / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zb2img / 1000), 3, MidpointRounding.AwayFromZero)} kOhms")
+            ResultsListBox.Items.Add($"Zseries in polar = {Math.Round((zseriespol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zseries in rectangular = {Math.Round((zseriesreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zseriesimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms")
+            ResultsListBox.Items.Add($"Zparallel in polar = {Math.Round((zparallelpol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zparallel in rectangular = {Math.Round((zparallelreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(zparallelimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms")
+            ResultsListBox.Items.Add($"Ztotal in polar = {Math.Round((ztotalpol / 1000), 3, MidpointRounding.AwayFromZero)} kOhms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Ztotal in rectangular = {Math.Round((ztotalreal / 1000), 3, MidpointRounding.AwayFromZero)} kOhms {zb1j} {Math.Round(Math.Abs(ztotalimg / 1000), 3, MidpointRounding.AwayFromZero)} kOhms")
+
+        ElseIf MOhmsDisplayRadioButton.Checked = True Then
+
+            ResultsListBox.Items.Add($"Xc1 = {Math.Round((Math.Abs(xc1Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Xl1 = {Math.Round((Math.Abs(xl1Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of +90 degrees")
+            ResultsListBox.Items.Add($"Zl1 = {Math.Round((Math.Abs(zl1PolResult / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zl1AngResult), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Xc2 = {Math.Round((Math.Abs(xc2Result / 1000000)), 9, MidpointRounding.AwayFromZero)} MOhms with an angle of -90 degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in polar = {Math.Round((zb1pol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zb1angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch1 in rectangular = {Math.Round((zb1real / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zb1img / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
+            ResultsListBox.Items.Add($"Zbranch2 in polar = {Math.Round((zb2pol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zb2angle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zbranch2 in rectangular = {Math.Round((zb2real / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zb2img / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
+            ResultsListBox.Items.Add($"Zseries in polar = {Math.Round((zseriespol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zseriesangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zseries in rectangular = {Math.Round((zseriesreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zseriesimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
+            ResultsListBox.Items.Add($"Zparallel in polar = {Math.Round((zparallelpol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((zparallelangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Zparallel in rectangular = {Math.Round((zparallelreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(zparallelimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
+            ResultsListBox.Items.Add($"Ztotal in polar = {Math.Round((ztotalpol / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms with an angle of {Math.Round((ztotalangle), 3, MidpointRounding.AwayFromZero)} degrees")
+            ResultsListBox.Items.Add($"Ztotal in rectangular = {Math.Round((ztotalreal / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms {zb1j} {Math.Round(Math.Abs(ztotalimg / 1000000), 3, MidpointRounding.AwayFromZero)} MOhms")
+        End If
+
+        If AmpsRadioButton.Checked = True Then
+            ResultsListBox.Items.Add($"Itotal = {Math.Round((itotalResult), 3, MidpointRounding.AwayFromZero)} Amps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch1 = {Math.Round((ib1Result), 3, MidpointRounding.AwayFromZero)} Amps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch2 = {Math.Round((ib2Result), 3, MidpointRounding.AwayFromZero)} Amps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
+
+        ElseIf mAmpsRadioButton.Checked = True Then
+            ResultsListBox.Items.Add($"Itotal = {Math.Round((itotalResult / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch1 = {Math.Round((ib1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch2 = {Math.Round((ib2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
+
+        ElseIf uAmpsRadioButton.Checked = True Then
+            ResultsListBox.Items.Add($"Itotal = {Math.Round((itotalResult / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch1 = {Math.Round((ib1Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Ibranch2 = {Math.Round((ib2Result / 0.000001), 3, MidpointRounding.AwayFromZero)} mAmps With an angle Of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
+        End If
+
+        If VRadioButton.Checked = True Then
+            ResultsListBox.Items.Add($"Vc1 = {Math.Round((vc1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (c1valueangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr1 = {Math.Round((vr1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vseries = {Math.Round((vSeries), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zseriesangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vparallel = {Math.Round((vparallel), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zparallelangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vz1 = {Math.Round((vz1Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle) + l1valueangle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr2 = {Math.Round((vr2Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vc2 = {Math.Round((vc2Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + zparallelangle - zb2angle) + c1valueangle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr3 = {Math.Round((vr3Result), 3, MidpointRounding.AwayFromZero)} Volts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
+
+        ElseIf mVRadioButton.Checked = True Then
+            ResultsListBox.Items.Add($"Vc1 = {Math.Round((vc1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (c1valueangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr1 = {Math.Round((vr1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((-1 * (ztotalangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vseries = {Math.Round((vSeries / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zseriesangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vparallel = {Math.Round((vparallel / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + (zparallelangle)), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vz1 = {Math.Round((vz1Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle) + l1valueangle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr2 = {Math.Round((vr2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + (zparallelangle)) - zb1angle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vc2 = {Math.Round((vc2Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round((((-1 * (ztotalangle)) + zparallelangle - zb2angle) + c1valueangle), 3, MidpointRounding.AwayFromZero)}")
+            ResultsListBox.Items.Add($"Vr3 = {Math.Round((vr3Result / 0.001), 3, MidpointRounding.AwayFromZero)} mVolts peak with an angle of {Math.Round(((-1 * (ztotalangle)) + zparallelangle - zb2angle), 3, MidpointRounding.AwayFromZero)}")
+
+        End If
 
     End Sub
 
 
-    Private Sub CalculateButton_Click(sender As Object, e As EventArgs) Handles CalculateButton.Click
+    Private Sub CalculateButton_Click(sender As Object, e As EventArgs) Handles CalculateButton.Click, CalculateToolStripMenuItem.Click, CalculateToolStripMenuItem1.Click
+
+        ResultsListBox.Items.Clear()
+
         If FieldValidation() = True Then
+
             DisplayResults()
 
         Else
@@ -437,13 +591,14 @@ Public Class SeriesParallelCalculator
 
     End Sub
 
-    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
+    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click, ClearToolStripMenuItem.Click, ClearToolStripMenuItem1.Click
         SetDefaults()
 
     End Sub
 
-    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click, ExitToolStripMenuItem.Click, ExitToolStripMenuItem1.Click
         Me.Close()
 
     End Sub
+
 End Class

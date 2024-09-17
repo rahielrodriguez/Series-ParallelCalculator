@@ -30,7 +30,6 @@ Partial Class SeriesParallelCalculator
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CircuitPictureBox = New System.Windows.Forms.PictureBox()
-        Me.R2Label = New System.Windows.Forms.Label()
         Me.ResultsListBox = New System.Windows.Forms.ListBox()
         Me.VgenTextBox = New System.Windows.Forms.TextBox()
         Me.FrequencyTextBox = New System.Windows.Forms.TextBox()
@@ -59,7 +58,6 @@ Partial Class SeriesParallelCalculator
         Me.R3TextBox = New System.Windows.Forms.TextBox()
         Me.R3ValueLabel = New System.Windows.Forms.Label()
         Me.ValuesGroupBox = New System.Windows.Forms.GroupBox()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.ControlsGroupBox = New System.Windows.Forms.GroupBox()
         Me.CmicroRadioButton = New System.Windows.Forms.RadioButton()
         Me.CpicoRadioButton = New System.Windows.Forms.RadioButton()
@@ -76,6 +74,17 @@ Partial Class SeriesParallelCalculator
         Me.MOhmsRadioButton = New System.Windows.Forms.RadioButton()
         Me.kOhmsRadioButton = New System.Windows.Forms.RadioButton()
         Me.OhmsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.VGenSettingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.mVRadioButton = New System.Windows.Forms.RadioButton()
+        Me.VRadioButton = New System.Windows.Forms.RadioButton()
+        Me.RDisplaySettingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.MOhmsDisplayRadioButton = New System.Windows.Forms.RadioButton()
+        Me.kOhmsDisplayRadioButton = New System.Windows.Forms.RadioButton()
+        Me.OhmsDisplayRadioButton = New System.Windows.Forms.RadioButton()
+        Me.IDisplaySettingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.uAmpsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.mAmpsRadioButton = New System.Windows.Forms.RadioButton()
+        Me.AmpsRadioButton = New System.Windows.Forms.RadioButton()
         Me.CalcMenuStrip.SuspendLayout()
         CType(Me.CircuitPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CalcContextMenuStrip.SuspendLayout()
@@ -85,6 +94,9 @@ Partial Class SeriesParallelCalculator
         Me.LSettingsGroupBox.SuspendLayout()
         Me.FrequencySettingsGroupBox.SuspendLayout()
         Me.RSettingsGroupBox.SuspendLayout()
+        Me.VGenSettingsGroupBox.SuspendLayout()
+        Me.RDisplaySettingsGroupBox.SuspendLayout()
+        Me.IDisplaySettingsGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'CalcMenuStrip
@@ -93,7 +105,7 @@ Partial Class SeriesParallelCalculator
         Me.CalcMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IToolStripMenuItem})
         Me.CalcMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.CalcMenuStrip.Name = "CalcMenuStrip"
-        Me.CalcMenuStrip.Size = New System.Drawing.Size(1363, 28)
+        Me.CalcMenuStrip.Size = New System.Drawing.Size(1496, 28)
         Me.CalcMenuStrip.TabIndex = 0
         Me.CalcMenuStrip.Text = "MenuStrip1"
         '
@@ -131,22 +143,13 @@ Partial Class SeriesParallelCalculator
         Me.CircuitPictureBox.TabIndex = 1
         Me.CircuitPictureBox.TabStop = False
         '
-        'R2Label
-        '
-        Me.R2Label.AutoSize = True
-        Me.R2Label.Location = New System.Drawing.Point(539, 323)
-        Me.R2Label.Name = "R2Label"
-        Me.R2Label.Size = New System.Drawing.Size(24, 16)
-        Me.R2Label.TabIndex = 5
-        Me.R2Label.Text = "R2"
-        '
         'ResultsListBox
         '
         Me.ResultsListBox.FormattingEnabled = True
         Me.ResultsListBox.ItemHeight = 16
         Me.ResultsListBox.Location = New System.Drawing.Point(899, 39)
         Me.ResultsListBox.Name = "ResultsListBox"
-        Me.ResultsListBox.Size = New System.Drawing.Size(452, 276)
+        Me.ResultsListBox.Size = New System.Drawing.Size(585, 340)
         Me.ResultsListBox.TabIndex = 10
         '
         'VgenTextBox
@@ -168,9 +171,9 @@ Partial Class SeriesParallelCalculator
         Me.VgenValueLabel.AutoSize = True
         Me.VgenValueLabel.Location = New System.Drawing.Point(17, 16)
         Me.VgenValueLabel.Name = "VgenValueLabel"
-        Me.VgenValueLabel.Size = New System.Drawing.Size(39, 16)
+        Me.VgenValueLabel.Size = New System.Drawing.Size(67, 16)
         Me.VgenValueLabel.TabIndex = 13
-        Me.VgenValueLabel.Text = "Vgen"
+        Me.VgenValueLabel.Text = "Vgen (Vp)"
         '
         'FrequencyValueLabel
         '
@@ -288,7 +291,7 @@ Partial Class SeriesParallelCalculator
         '
         'ClearButton
         '
-        Me.ClearButton.Location = New System.Drawing.Point(12, 93)
+        Me.ClearButton.Location = New System.Drawing.Point(161, 17)
         Me.ClearButton.Name = "ClearButton"
         Me.ClearButton.Size = New System.Drawing.Size(143, 70)
         Me.ClearButton.TabIndex = 13
@@ -298,7 +301,7 @@ Partial Class SeriesParallelCalculator
         'ExitButton
         '
         Me.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.ExitButton.Location = New System.Drawing.Point(12, 168)
+        Me.ExitButton.Location = New System.Drawing.Point(310, 17)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(143, 70)
         Me.ExitButton.TabIndex = 14
@@ -375,7 +378,7 @@ Partial Class SeriesParallelCalculator
         Me.ValuesGroupBox.Controls.Add(Me.VgenTextBox)
         Me.ValuesGroupBox.Location = New System.Drawing.Point(7, 511)
         Me.ValuesGroupBox.Name = "ValuesGroupBox"
-        Me.ValuesGroupBox.Size = New System.Drawing.Size(621, 114)
+        Me.ValuesGroupBox.Size = New System.Drawing.Size(611, 114)
         Me.ValuesGroupBox.TabIndex = 32
         Me.ValuesGroupBox.TabStop = False
         Me.ValuesGroupBox.Text = "Values"
@@ -385,12 +388,11 @@ Partial Class SeriesParallelCalculator
         Me.ControlsGroupBox.Controls.Add(Me.ExitButton)
         Me.ControlsGroupBox.Controls.Add(Me.ClearButton)
         Me.ControlsGroupBox.Controls.Add(Me.CalculateButton)
-        Me.ControlsGroupBox.Location = New System.Drawing.Point(1181, 372)
+        Me.ControlsGroupBox.Location = New System.Drawing.Point(964, 392)
         Me.ControlsGroupBox.Name = "ControlsGroupBox"
-        Me.ControlsGroupBox.Size = New System.Drawing.Size(170, 253)
+        Me.ControlsGroupBox.Size = New System.Drawing.Size(464, 99)
         Me.ControlsGroupBox.TabIndex = 33
         Me.ControlsGroupBox.TabStop = False
-        Me.ControlsGroupBox.Text = "GroupBox2"
         '
         'CmicroRadioButton
         '
@@ -442,24 +444,24 @@ Partial Class SeriesParallelCalculator
         '
         Me.CSettingsGroupBox.Controls.Add(Me.CpicoRadioButton)
         Me.CSettingsGroupBox.Controls.Add(Me.CmicroRadioButton)
-        Me.CSettingsGroupBox.Location = New System.Drawing.Point(940, 520)
+        Me.CSettingsGroupBox.Location = New System.Drawing.Point(964, 511)
         Me.CSettingsGroupBox.Name = "CSettingsGroupBox"
-        Me.CSettingsGroupBox.Size = New System.Drawing.Size(80, 73)
+        Me.CSettingsGroupBox.Size = New System.Drawing.Size(99, 73)
         Me.CSettingsGroupBox.TabIndex = 10
         Me.CSettingsGroupBox.TabStop = False
-        Me.CSettingsGroupBox.Text = "CSettings"
+        Me.CSettingsGroupBox.Text = "C Settings"
         '
         'LSettingsGroupBox
         '
         Me.LSettingsGroupBox.Controls.Add(Me.LmicroRadioButton)
         Me.LSettingsGroupBox.Controls.Add(Me.LmilliRadioButton)
         Me.LSettingsGroupBox.Controls.Add(Me.LRadioButton)
-        Me.LSettingsGroupBox.Location = New System.Drawing.Point(1047, 520)
+        Me.LSettingsGroupBox.Location = New System.Drawing.Point(1069, 511)
         Me.LSettingsGroupBox.Name = "LSettingsGroupBox"
-        Me.LSettingsGroupBox.Size = New System.Drawing.Size(83, 105)
+        Me.LSettingsGroupBox.Size = New System.Drawing.Size(102, 105)
         Me.LSettingsGroupBox.TabIndex = 11
         Me.LSettingsGroupBox.TabStop = False
-        Me.LSettingsGroupBox.Text = "LSettings"
+        Me.LSettingsGroupBox.Text = "L Settings"
         '
         'LmicroRadioButton
         '
@@ -477,12 +479,12 @@ Partial Class SeriesParallelCalculator
         Me.FrequencySettingsGroupBox.Controls.Add(Me.MHzRadioButton)
         Me.FrequencySettingsGroupBox.Controls.Add(Me.kHzRadioButton)
         Me.FrequencySettingsGroupBox.Controls.Add(Me.HzRadioButton)
-        Me.FrequencySettingsGroupBox.Location = New System.Drawing.Point(839, 520)
+        Me.FrequencySettingsGroupBox.Location = New System.Drawing.Point(755, 511)
         Me.FrequencySettingsGroupBox.Name = "FrequencySettingsGroupBox"
-        Me.FrequencySettingsGroupBox.Size = New System.Drawing.Size(83, 105)
+        Me.FrequencySettingsGroupBox.Size = New System.Drawing.Size(97, 105)
         Me.FrequencySettingsGroupBox.TabIndex = 9
         Me.FrequencySettingsGroupBox.TabStop = False
-        Me.FrequencySettingsGroupBox.Text = "FSettings"
+        Me.FrequencySettingsGroupBox.Text = "F Settings"
         '
         'MHzRadioButton
         '
@@ -523,12 +525,12 @@ Partial Class SeriesParallelCalculator
         Me.RSettingsGroupBox.Controls.Add(Me.MOhmsRadioButton)
         Me.RSettingsGroupBox.Controls.Add(Me.kOhmsRadioButton)
         Me.RSettingsGroupBox.Controls.Add(Me.OhmsRadioButton)
-        Me.RSettingsGroupBox.Location = New System.Drawing.Point(735, 520)
+        Me.RSettingsGroupBox.Location = New System.Drawing.Point(858, 511)
         Me.RSettingsGroupBox.Name = "RSettingsGroupBox"
-        Me.RSettingsGroupBox.Size = New System.Drawing.Size(83, 105)
+        Me.RSettingsGroupBox.Size = New System.Drawing.Size(100, 105)
         Me.RSettingsGroupBox.TabIndex = 39
         Me.RSettingsGroupBox.TabStop = False
-        Me.RSettingsGroupBox.Text = "RSettings"
+        Me.RSettingsGroupBox.Text = "R Settings"
         '
         'MOhmsRadioButton
         '
@@ -564,13 +566,142 @@ Partial Class SeriesParallelCalculator
         Me.OhmsRadioButton.Text = "Ohms"
         Me.OhmsRadioButton.UseVisualStyleBackColor = True
         '
+        'VGenSettingsGroupBox
+        '
+        Me.VGenSettingsGroupBox.Controls.Add(Me.mVRadioButton)
+        Me.VGenSettingsGroupBox.Controls.Add(Me.VRadioButton)
+        Me.VGenSettingsGroupBox.Location = New System.Drawing.Point(624, 511)
+        Me.VGenSettingsGroupBox.Name = "VGenSettingsGroupBox"
+        Me.VGenSettingsGroupBox.Size = New System.Drawing.Size(125, 73)
+        Me.VGenSettingsGroupBox.TabIndex = 39
+        Me.VGenSettingsGroupBox.TabStop = False
+        Me.VGenSettingsGroupBox.Text = "Vgen Settings"
+        '
+        'mVRadioButton
+        '
+        Me.mVRadioButton.AutoSize = True
+        Me.mVRadioButton.Location = New System.Drawing.Point(7, 47)
+        Me.mVRadioButton.Name = "mVRadioButton"
+        Me.mVRadioButton.Size = New System.Drawing.Size(48, 20)
+        Me.mVRadioButton.TabIndex = 37
+        Me.mVRadioButton.TabStop = True
+        Me.mVRadioButton.Text = "mV"
+        Me.mVRadioButton.UseVisualStyleBackColor = True
+        '
+        'VRadioButton
+        '
+        Me.VRadioButton.AutoSize = True
+        Me.VRadioButton.Checked = True
+        Me.VRadioButton.Location = New System.Drawing.Point(7, 21)
+        Me.VRadioButton.Name = "VRadioButton"
+        Me.VRadioButton.Size = New System.Drawing.Size(58, 20)
+        Me.VRadioButton.TabIndex = 36
+        Me.VRadioButton.TabStop = True
+        Me.VRadioButton.Text = "Volts"
+        Me.VRadioButton.UseVisualStyleBackColor = True
+        '
+        'RDisplaySettingsGroupBox
+        '
+        Me.RDisplaySettingsGroupBox.Controls.Add(Me.MOhmsDisplayRadioButton)
+        Me.RDisplaySettingsGroupBox.Controls.Add(Me.kOhmsDisplayRadioButton)
+        Me.RDisplaySettingsGroupBox.Controls.Add(Me.OhmsDisplayRadioButton)
+        Me.RDisplaySettingsGroupBox.Location = New System.Drawing.Point(1337, 511)
+        Me.RDisplaySettingsGroupBox.Name = "RDisplaySettingsGroupBox"
+        Me.RDisplaySettingsGroupBox.Size = New System.Drawing.Size(147, 105)
+        Me.RDisplaySettingsGroupBox.TabIndex = 40
+        Me.RDisplaySettingsGroupBox.TabStop = False
+        Me.RDisplaySettingsGroupBox.Text = "R Display Settings"
+        '
+        'MOhmsDisplayRadioButton
+        '
+        Me.MOhmsDisplayRadioButton.AutoSize = True
+        Me.MOhmsDisplayRadioButton.Location = New System.Drawing.Point(7, 73)
+        Me.MOhmsDisplayRadioButton.Name = "MOhmsDisplayRadioButton"
+        Me.MOhmsDisplayRadioButton.Size = New System.Drawing.Size(74, 20)
+        Me.MOhmsDisplayRadioButton.TabIndex = 38
+        Me.MOhmsDisplayRadioButton.TabStop = True
+        Me.MOhmsDisplayRadioButton.Text = "MOhms"
+        Me.MOhmsDisplayRadioButton.UseVisualStyleBackColor = True
+        '
+        'kOhmsDisplayRadioButton
+        '
+        Me.kOhmsDisplayRadioButton.AutoSize = True
+        Me.kOhmsDisplayRadioButton.Location = New System.Drawing.Point(7, 47)
+        Me.kOhmsDisplayRadioButton.Name = "kOhmsDisplayRadioButton"
+        Me.kOhmsDisplayRadioButton.Size = New System.Drawing.Size(70, 20)
+        Me.kOhmsDisplayRadioButton.TabIndex = 37
+        Me.kOhmsDisplayRadioButton.TabStop = True
+        Me.kOhmsDisplayRadioButton.Text = "kOhms"
+        Me.kOhmsDisplayRadioButton.UseVisualStyleBackColor = True
+        '
+        'OhmsDisplayRadioButton
+        '
+        Me.OhmsDisplayRadioButton.AutoSize = True
+        Me.OhmsDisplayRadioButton.Checked = True
+        Me.OhmsDisplayRadioButton.Location = New System.Drawing.Point(7, 21)
+        Me.OhmsDisplayRadioButton.Name = "OhmsDisplayRadioButton"
+        Me.OhmsDisplayRadioButton.Size = New System.Drawing.Size(63, 20)
+        Me.OhmsDisplayRadioButton.TabIndex = 36
+        Me.OhmsDisplayRadioButton.TabStop = True
+        Me.OhmsDisplayRadioButton.Text = "Ohms"
+        Me.OhmsDisplayRadioButton.UseVisualStyleBackColor = True
+        '
+        'IDisplaySettingsGroupBox
+        '
+        Me.IDisplaySettingsGroupBox.Controls.Add(Me.uAmpsRadioButton)
+        Me.IDisplaySettingsGroupBox.Controls.Add(Me.mAmpsRadioButton)
+        Me.IDisplaySettingsGroupBox.Controls.Add(Me.AmpsRadioButton)
+        Me.IDisplaySettingsGroupBox.Location = New System.Drawing.Point(1177, 511)
+        Me.IDisplaySettingsGroupBox.Name = "IDisplaySettingsGroupBox"
+        Me.IDisplaySettingsGroupBox.Size = New System.Drawing.Size(154, 105)
+        Me.IDisplaySettingsGroupBox.TabIndex = 39
+        Me.IDisplaySettingsGroupBox.TabStop = False
+        Me.IDisplaySettingsGroupBox.Text = "I Display Settings"
+        '
+        'uAmpsRadioButton
+        '
+        Me.uAmpsRadioButton.AutoSize = True
+        Me.uAmpsRadioButton.Location = New System.Drawing.Point(7, 73)
+        Me.uAmpsRadioButton.Name = "uAmpsRadioButton"
+        Me.uAmpsRadioButton.Size = New System.Drawing.Size(70, 20)
+        Me.uAmpsRadioButton.TabIndex = 38
+        Me.uAmpsRadioButton.TabStop = True
+        Me.uAmpsRadioButton.Text = "uAmps"
+        Me.uAmpsRadioButton.UseVisualStyleBackColor = True
+        '
+        'mAmpsRadioButton
+        '
+        Me.mAmpsRadioButton.AutoSize = True
+        Me.mAmpsRadioButton.Location = New System.Drawing.Point(7, 47)
+        Me.mAmpsRadioButton.Name = "mAmpsRadioButton"
+        Me.mAmpsRadioButton.Size = New System.Drawing.Size(74, 20)
+        Me.mAmpsRadioButton.TabIndex = 37
+        Me.mAmpsRadioButton.TabStop = True
+        Me.mAmpsRadioButton.Text = "mAmps"
+        Me.mAmpsRadioButton.UseVisualStyleBackColor = True
+        '
+        'AmpsRadioButton
+        '
+        Me.AmpsRadioButton.AutoSize = True
+        Me.AmpsRadioButton.Checked = True
+        Me.AmpsRadioButton.Location = New System.Drawing.Point(7, 21)
+        Me.AmpsRadioButton.Name = "AmpsRadioButton"
+        Me.AmpsRadioButton.Size = New System.Drawing.Size(63, 20)
+        Me.AmpsRadioButton.TabIndex = 36
+        Me.AmpsRadioButton.TabStop = True
+        Me.AmpsRadioButton.Text = "Amps"
+        Me.AmpsRadioButton.UseVisualStyleBackColor = True
+        '
         'SeriesParallelCalculator
         '
         Me.AcceptButton = Me.CalculateButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ExitButton
-        Me.ClientSize = New System.Drawing.Size(1363, 637)
+        Me.ClientSize = New System.Drawing.Size(1496, 643)
+        Me.Controls.Add(Me.IDisplaySettingsGroupBox)
+        Me.Controls.Add(Me.RDisplaySettingsGroupBox)
+        Me.Controls.Add(Me.VGenSettingsGroupBox)
         Me.Controls.Add(Me.RSettingsGroupBox)
         Me.Controls.Add(Me.FrequencySettingsGroupBox)
         Me.Controls.Add(Me.LSettingsGroupBox)
@@ -578,7 +709,6 @@ Partial Class SeriesParallelCalculator
         Me.Controls.Add(Me.ControlsGroupBox)
         Me.Controls.Add(Me.ValuesGroupBox)
         Me.Controls.Add(Me.ResultsListBox)
-        Me.Controls.Add(Me.R2Label)
         Me.Controls.Add(Me.CircuitPictureBox)
         Me.Controls.Add(Me.CalcMenuStrip)
         Me.MainMenuStrip = Me.CalcMenuStrip
@@ -600,6 +730,12 @@ Partial Class SeriesParallelCalculator
         Me.FrequencySettingsGroupBox.PerformLayout()
         Me.RSettingsGroupBox.ResumeLayout(False)
         Me.RSettingsGroupBox.PerformLayout()
+        Me.VGenSettingsGroupBox.ResumeLayout(False)
+        Me.VGenSettingsGroupBox.PerformLayout()
+        Me.RDisplaySettingsGroupBox.ResumeLayout(False)
+        Me.RDisplaySettingsGroupBox.PerformLayout()
+        Me.IDisplaySettingsGroupBox.ResumeLayout(False)
+        Me.IDisplaySettingsGroupBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -615,7 +751,6 @@ Partial Class SeriesParallelCalculator
     Friend WithEvents C1Label As Label
     Friend WithEvents R1Label As Label
     Friend WithEvents L1Label As Label
-    Friend WithEvents R2Label As Label
     Friend WithEvents C2Label As Label
     Friend WithEvents R3Label As Label
     Friend WithEvents VgenLabel As Label
@@ -648,7 +783,6 @@ Partial Class SeriesParallelCalculator
     Friend WithEvents R3TextBox As TextBox
     Friend WithEvents R3ValueLabel As Label
     Friend WithEvents ValuesGroupBox As GroupBox
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents ControlsGroupBox As GroupBox
     Friend WithEvents CmicroRadioButton As RadioButton
     Friend WithEvents CpicoRadioButton As RadioButton
@@ -665,4 +799,15 @@ Partial Class SeriesParallelCalculator
     Friend WithEvents MOhmsRadioButton As RadioButton
     Friend WithEvents kOhmsRadioButton As RadioButton
     Friend WithEvents OhmsRadioButton As RadioButton
+    Friend WithEvents VGenSettingsGroupBox As GroupBox
+    Friend WithEvents mVRadioButton As RadioButton
+    Friend WithEvents VRadioButton As RadioButton
+    Friend WithEvents RDisplaySettingsGroupBox As GroupBox
+    Friend WithEvents MOhmsDisplayRadioButton As RadioButton
+    Friend WithEvents kOhmsDisplayRadioButton As RadioButton
+    Friend WithEvents OhmsDisplayRadioButton As RadioButton
+    Friend WithEvents IDisplaySettingsGroupBox As GroupBox
+    Friend WithEvents uAmpsRadioButton As RadioButton
+    Friend WithEvents mAmpsRadioButton As RadioButton
+    Friend WithEvents AmpsRadioButton As RadioButton
 End Class
